@@ -1,0 +1,90 @@
+import { Steps } from 'nextra/components'
+import { Callout } from 'nextra/components'
+import { FileTree } from 'nextra/components'
+
+# Installation
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">How to add and structure the hooks in your project.</h3>
+ 
+<Callout type="info">
+ **Quick heads up!**
+ I've just added a convenient feature and I'll start working on it: a custom Command Line Interface (CLI) tool. 
+ This CLI is designed to handle a specific step in the process, making things smoother for you. 
+ Instead of manually dealing with it, you can now just run the CLI and let it take care of everything.
+</Callout>
+ 
+<Steps>
+### Create folder
+ 
+Begin by creating a folder named **hooks** in your project. This is where we'll house our custom hooks. Here's the structure I typically follow:
+
+```
+.
+├── src
+│   ├── hooks
+│        ├── use-abort-controller.ts
+│        ├── use-cookie.ts
+│        ├── use-history.ts
+│        ├── use-local-storage.ts
+│        └── ...
+└── ... 
+
+```
+
+<FileTree>
+  <FileTree.Folder name="src" defaultOpen>
+    <FileTree.Folder name="hooks" defaultOpen>
+      <FileTree.File name="use-abort-controller.ts" />
+      <FileTree.File name="use-cookie.ts" />
+      <FileTree.File name="uuse-history.ts" />
+      <FileTree.File name="use-local-storage.ts" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+### Choose hook
+
+ 
+1. Select the [hook](https://github.com/alamenai/rehook/tree/main/src/hooks) that suits your requirements. 
+
+
+2. Simply copy the code snippet provided below and paste it into your project. 
+
+
+3. Don't hesitate to tweak and personalize it to align with our specific needs—after all, the code is yours to mold.
+
+### Add hook
+
+For example, let's say we pick [useCookie](https://github.com/alamenai/rehook/blob/main/src/hooks/use-cookie.ts) as our desired hook:
+
+1. Create a file named 'use-cookie.ts'.
+
+2. Copy and paste the code from [use-cookie](https://github.com/alamenai/rehook/blob/main/src/hooks/use-cookie.ts) into this file.
+
+##### Usage
+
+``` jsx {3,7}
+
+import './App.css'
+import { setCookie } from './hooks/use-cookie'
+
+function App() {
+    const addCookie = (key: string, value: string, options: any) => {
+        setCookie('pass-key', 'xyz', options)
+    }
+
+    return (
+        <div style={{ display: 'flex', gap: 10 }}>
+            <button onClick={addCookie('pass-key', 'xyz', {})}>Add Cookie</button>
+        </div>
+    )
+}
+
+export default App
+
+```
+
+
+### That's it !
+
+</Steps>
