@@ -204,20 +204,128 @@ export const getLocalStorageItems = () => {
 
 ```
 
-### API 
 
-| Returns               | Description                                              |
-|-----------------------|----------------------------------------------------------|
-| [storage](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L107)               | An array representing the current state of local storage items. |
-| [getValue(itemKey: string): string \| null](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L16) | Retrieves the value of a specific item from local storage. |
-| [renameKey(oldKey: string, newKey: string): void](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L28) | Renames a key in the local storage. |
-| [getMultipleValues(keys: string[]): string[]](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L45) | Retrieves values for multiple items from local storage. |
-| [addItem(key: string, value: string): void]() | Adds a new item to the local storage. |
-| [`addMultipleItems(items: { key: string; value: string }[]()): void`](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L56) | Adds multiple items to the local storage. |
-| [deleteItem(key: string): void](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L77)| Deletes an item from the local storage. |
-| [deleteItemAfterDelay(key: string, time: number): void](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L89) | Deletes an item from the local storage after a specified delay. |
-| [deleteMultipleItems(keys: string[]): void](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L95) | Deletes multiple items from the local storage. |
-| [clearLocalStorage(): void](https://github.com/alamenai/rehook/blob/4965ec5d9a8e8adf6a57c6c1fa65bb8205634fcb/src/hooks/use-local-storage.ts#L101) | Clears all items from the local storage. |
+## API
 
 
+[`storage`](/hooks/use-local-storage#hook)
 
+An array representing the current state of local storage items..
+
+[`getValue(itemKey: string): string | null`](/hooks/use-local-storage#hook)
+
+Retrieves the value of a specific item from local storage.
+
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter   | Type       | Description                                     |
+|-------------|------------|-------------------------------------------------|
+| `itemKey`   | `string`   | The key of the item to retrieve.                |
+
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Type             | Description                                     |
+|------------------|-------------------------------------------------|
+| `string` \| `null` | The value of the specified item if found; otherwise, null. |
+
+
+ [`renameKey(oldKey: string, newKey: string): void`](/hooks/use-local-storage#hook)
+
+Renames a key in the local storage.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+
+| Parameter   | Type       | Description                                     |
+|-------------|------------|-------------------------------------------------|
+| `oldKey`    | `string`   | The current key name.                          |
+| `newKey`    | `string`   | The new key name.                              |
+
+[`getMultipleValues(keys: string[]): string[]`](/hooks/use-local-storage#hook)
+
+Retrieves values for multiple items from local storage.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+
+| Parameter   | Type       | Description                                     |
+|-------------|------------|-------------------------------------------------|
+| `keys (string[])`  | `string`   |  An array of keys to retrieve values for.               |
+
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Type       | Description                                      |
+|------------|--------------------------------------------------|
+| `string[]` | An array containing values of the specified keys.|
+
+
+[`addItem(key: string, value: string): void`](/hooks/use-local-storage#hook)
+
+
+Adds a new item to the local storage.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+
+| Parameter | Type     | Description                             |
+|-----------|----------|-----------------------------------------|
+| `key`     | `string` | The key of the item to add.             |
+| `value`   | `string` | The value of the item to add.           |
+
+
+[`addMultipleItems(items: { key: string; value: string }[]): void`](/hooks/use-local-storage#hook)
+
+Adds multiple items to the local storage.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+
+| Parameter | Type                                    | Description                                    |
+|-----------|-----------------------------------------|------------------------------------------------|
+| `items`   | `{ key: string; value: string }[]`     | An array of objects containing key-value pairs to add. |
+
+
+[`deleteItem(key: string): void`](/hooks/use-local-storage#hook)
+
+
+Deletes an item from the local storage.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+
+| Parameter | Type     | Description                       |
+|-----------|----------|-----------------------------------|
+| `key`     | `string` | The key of the item to delete.   |
+
+]
+[`deleteItemAfterDelay(key: string, time: number): void`](/hooks/use-local-storage#hook)
+
+
+Deletes an item from the local storage after a specified delay.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+
+| Parameter | Type      | Description                                      |
+|-----------|-----------|--------------------------------------------------|
+| `key`     | `string`  | The key of the item to delete.                   |
+| `time`    | `number`  | The delay time in milliseconds.                  |
+
+
+[`deleteMultipleItems(keys: string[]): void`](/hooks/use-local-storage#hook)
+
+Deletes multiple items from the local storage.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type         | Description                                      |
+|-----------|--------------|--------------------------------------------------|
+| `keys`    | `string[]`   | An array of keys of the items to delete.        |
+
+[`clearLocalStorage(): void`](/hooks/use-local-storage#hook)
+
+
+Clears all items from the local storage.
