@@ -1,4 +1,6 @@
 {
   "use-local-storage": "useLocalStorage",
-  "use-abort-controller": "useAbortController"
+  "use-abort-controller": "useAbortController",
+  "use-history": "useHistory",
+  "use-query-params": "useQueryParams"
 }

@@ -1,0 +1,164 @@
+
+import { Steps,Callout } from 'nextra/components'
+
+# useQueryParams
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook that provides functionalities for managing query parameters in the URL.</h3>
+
+<Callout type="warning">This hook has a dependency on [useHistory](/hooks/use-history).</Callout>
+
+### Add hook
+ 
+Create a file `use-query-params.ts` and copy & paste from [useLQueryParams](/hooks/use-query-params#hook)
+
+### Usage
+
+```tsx {3,6} copy
+
+import React from 'react';
+import { useQueryParams } from './useQueryParams';
+
+function ExampleComponent() {
+    const { queryParams, get, set, setEncoded } = useQueryParams();
+
+    // Get a specific query parameter
+    const paramValue = get('name');
+
+    // Set a query parameter
+    const handleClick = () => {
+        set('age', 30);
+    };
+
+    // Set multiple query parameters
+    const handleSetMultiple = () => {
+        setEncoded({ language: 'arabic', nationality: 'algerian' });
+    };
+
+    return (
+        <div>
+            <h1>Query Parameters Example</h1>
+            <p>Value of paramName: {paramValue}</p>
+            <button onClick={handleClick}>Set newParam to 'newValue'</button>
+            <button onClick={handleSetMultiple}>Set multiple parameters</button>
+            <h2>Current Query Parameters:</h2>
+            <ul>
+                {Array.from(queryParams).map(([key, value]) => (
+                    <li key={key}>
+                        {key}: {value}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+export default ExampleComponent;
+
+```
+
+### Hook
+
+```ts copy
+
+import { useHistory } from './use-history'
+
+export const useQueryParams = () => {
+    const history = useHistory()
+
+    const urlParams = new URLSearchParams(window.location.search)
+
+    const get = (param: string) => {
+        for (const [key, value] of urlParams) {
+            if (param === key) {
+                return value
+            }
+        }
+    }
+
+    const getAll = () => {
+        const keys = new Map()
+
+        for (const [key, value] of urlParams) {
+            keys.set(key, value)
+        }
+
+        return keys
+    }
+
+    const set = (key: string, value: string | number) => {
+        const isFound = getAll().has(key)
+
+        if (isFound) {
+            urlParams.set(key, value as string)
+        } else {
+            urlParams.append(key, value as string)
+        }
+
+        const newRelativePathQuery = window.location.pathname + '?' + urlParams.toString()
+
+        history.push(newRelativePathQuery)
+    }
+
+    const setEncoded = (obj: { [s: string]: string | number } | ArrayLike<string>) => {
+        const encodedParams = new URLSearchParams()
+
+        for (const [key, value] of Object.entries(obj)) {
+            encodedParams.append(key, value as string)
+        }
+
+        const newRelativePathQuery = window.location.pathname + '?' + encodedParams.toString()
+
+        history.push(newRelativePathQuery)
+    }
+
+    return { urlParams: getAll(), get, set, setEncoded }
+}
+
+
+```
+
+
+## API
+
+
+[`queryParams`](/hooks/use-query-params#hook)
+
+A Map representing the current state of query parameters in the URL.
+
+[`get(param: string): string`](/hooks/use-query-params#hook)
+
+Retrieves the value of a specific query parameter from the URL.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type     | Description                              |
+|-----------|----------|------------------------------------------|
+| `param`   | `string` | The name of the query parameter to get. |
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Type     | Description                              |
+|----------|------------------------------------------|
+| `string` | The value of the specified query parameter. |
+
+[`set(key: string, value: string | number): void`](/hooks/use-query-params#hook)
+
+Sets the value of a query parameter in the URL.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type             | Description                                    |
+|-----------|------------------|------------------------------------------------|
+| `key`     | `string`         | The name of the query parameter to set.       |
+| `value`   | `string \| number` | The value to assign to the query parameter.   |
+
+[`setEncoded(obj: { [s: string]: string | number } | ArrayLike<string>): void`](/hooks/use-query-params#hook)
+
+Sets the query parameters in the URL using an object or an array-like structure.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type                                    | Description                                   |
+|-----------|-----------------------------------------|-----------------------------------------------|
+| `obj`     | `{ [s: string]: string \| number } \| ArrayLike<string>` | An object or an array-like structure containing key-value pairs to set as query parameters. |
+
