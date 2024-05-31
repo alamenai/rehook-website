@@ -1,0 +1,87 @@
+## usePersistentState
+
+A custom hook that provides persistent state management by storing state values in the browser's local storage.
+
+### Add hook
+
+Create a file `use-persistent-state.ts` and copy & paste the code from [usePersistentState](/hooks/use-persistent-state#hook).
+
+### Usage
+
+```jsx {3,6} copy
+
+import React from 'react';
+import { usePersistentState } from './hooks/use-persistent-state';
+
+function App() {
+    const [count, setCount] = usePersistentState('count', 0);
+
+    return (
+        <div>
+            <h1>Persistent State Demo</h1>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+            <button onClick={() => setCount(count - 1)}>Decrement</button>
+            <button onClick={() => setCount(0)}>Reset</button>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+### Hook
+
+``` ts copy
+
+import { Item, useLocalStorage } from './use-local-storage'
+import { useEffect, useState } from 'react'
+
+export const usePersistentState = <PesistentState>(
+    key: string,
+    initialState: PesistentState,
+): [PesistentState, React.Dispatch<React.SetStateAction<PesistentState>>] => {
+    const gettItem = () => {
+        const item = localStorage.getItem(key)
+
+        if (item) {
+            if (parseFloat(item)) {
+                return parseFloat(item) as PesistentState
+            }
+
+            return item as PesistentState
+        }
+
+        
+        return initialState
+    }
+
+    const [state, setState] = useState(gettItem())
+
+    const { addItem } = useLocalStorage()
+
+    useEffect(() => {
+        addItem(key ?? 'persistent-state', state as Item)
+    }, [state, key])
+
+    return [state, setState]
+}
+
+
+```
+
+## API
+
+<h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter       | Type      | Description                                                  |
+|-----------------|-----------|--------------------------------------------------------------|
+| `key`           | `string`  | The key under which the state will be stored in local storage. |
+| `initialState`  | `PesistentState` | The initial state value.                                   |
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Type                                                      | Description                                                  |
+|-----------------------------------------------------------|--------------------------------------------------------------|
+| `[PesistentState, React.Dispatch<React.SetStateAction<PesistentState>>]` | A tuple containing the current state value and a function to update the state. |
