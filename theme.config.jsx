@@ -1,3 +1,5 @@
+import { Badge } from "./components/ui/badge";
+
 const config = {
   logo: () => {
     return (
@@ -48,6 +50,20 @@ const config = {
   },
   project: {
     link: "https://github.com/alamenai/rehook",
+  },
+  sidebar: {
+    titleComponent({ title, type }) {
+      return (
+        <div className="flex items-center justify-between relative w-full">
+          <div>{title}</div>
+          {(title === "useTimeout" || title === "usePersistentState") && (
+            <Badge className=" absolute -right-[0.5em] bg-transparent border-lime-400 text-lime-500 px-[0.5em]">
+              New
+            </Badge>
+          )}
+        </div>
+      );
+    },
   },
   footer: {
     text: (
