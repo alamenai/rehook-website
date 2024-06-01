@@ -1,0 +1,98 @@
+# useTimeout
+
+A custom hook for managing timeouts.
+
+## Usage
+
+```tsx
+import React, { useState } from 'react';
+import { useTimeout } from './useTimeout';
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    const incrementAfterDelay = () => {
+        setCount(prevCount => prevCount + 1);
+    };
+
+   
+    const { timeout, refresh, cancel } = useTimeout(2000, incrementAfterDelay);
+
+   
+    const handleRefresh = () => {
+        refresh(); 
+        console.log("Timeout refreshed.");
+    };
+
+ 
+    const handleCancel = () => {
+        cancel(); 
+        console.log("Timeout canceled.");
+    };
+
+    return (
+        <div>
+            <h1>useTimeout Example</h1>
+            <p>Count: {count}</p>
+            <button onClick={handleRefresh}>Refresh Timeout</button>
+            <button onClick={handleCancel}>Cancel Timeout</button>
+            <p>Note: Count will increment after a 2-second delay unless refreshed or canceled.</p>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+### Hook
+
+```ts copy
+
+import { useEffect, useRef } from 'react'
+
+export const useTimeout = (t: number, fn?: () => void) => {
+    const timeout = useRef<NodeJS.Timeout>()
+
+    const refresh = () => timeout.current?.refresh()
+
+    const cancel = () => clearTimeout(timeout.current)
+
+    useEffect(() => {
+        if (fn) {
+            timeout.current = setTimeout(() => fn(), t)
+        }
+    }, [fn, t])
+
+    return { timeout, refresh, cancel }
+}
+
+
+```
+
+## API
+
+[`useTimeout(t: number, fn?: () => void): { timeout: React.MutableRefObject<NodeJS.Timeout | undefined>, refresh: () => void, cancel: () => void }`](/hooks/use-timeout#hook)
+
+Creates a timeout that will invoke a callback function after a specified time period.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type | Description |
+| ---- | ---- | ----------- |
+| `t` | `number` | The duration of the timeout (in milliseconds). |
+| `fn` | `() => void` (optional) | The callback function to execute when the timeout expires. |
+
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+An object containing the following properties:
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| `timeout` | `React.MutableRefObject<NodeJS.Timeout \| undefined>` | A mutable reference to the timeout object created by `setTimeout`. This can be used to manipulate the timeout if needed. |
+| `refresh` | `() => void` | A function to refresh the timeout, effectively resetting the timer. |
+| `cancel` | `() => void` | A function to cancel the timeout, preventing the callback function from being invoked. |
+
+
+
