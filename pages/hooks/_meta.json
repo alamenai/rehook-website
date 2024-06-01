@@ -1,7 +1,9 @@
 {
-  "use-local-storage": "useLocalStorage",
   "use-abort-controller": "useAbortController",
   "use-history": "useHistory",
+  "use-local-storage": "useLocalStorage",
+  "use-persistent-state":"usePersistentState",
   "use-query-params": "useQueryParams",
-  "use-persistent-state":"usePersistentState"
+  "use-timeout":"useTimeout"
+
 }

@@ -7,6 +7,7 @@ export const content = [
   "./components/**/*.{js,jsx}",
   "./app/**/*.{js,jsx,mdx}",
   "./src/**/*.{js,jsx,mdx}",
+  "./theme.config.jsx"
 ];
 export const prefix = "";
 export const theme = {
