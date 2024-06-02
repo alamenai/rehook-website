@@ -53,10 +53,14 @@ const config = {
   },
   sidebar: {
     titleComponent({ title, type }) {
+      const newHooks = ["useTimeout", "usePersistent", "useFetch"];
+      
       return (
         <div className="flex items-center justify-between relative w-full">
           <div>{title}</div>
-          {(title === "useTimeout" || title === "usePersistentState") && (
+          {(title === "useTimeout" ||
+            title === "usePersistentState" ||
+            title === "useFetch") && (
             <Badge className=" absolute -right-[0.5em] bg-transparent border-lime-400 text-lime-500 px-[0.5em]">
               New
             </Badge>
