@@ -1,9 +1,9 @@
 {
   "use-abort-controller": "useAbortController",
+  "use-fetch": "useFetch",
   "use-history": "useHistory",
   "use-local-storage": "useLocalStorage",
-  "use-persistent-state":"usePersistentState",
+  "use-persistent-state": "usePersistentState",
   "use-query-params": "useQueryParams",
-  "use-timeout":"useTimeout"
-
+  "use-timeout": "useTimeout"
 }
