@@ -34,16 +34,16 @@ const config = {
           </svg>
           <span
             style={{
-              marginLeft: ".8em",
               fontWeight: 800,
               color: "#FF00F5",
-              fontSize: 24,
             }}
+            className="flex items-center text-2xl ml-4"
           >
-            Rehook
+            <p className="mr-6">Rehook</p>
+            <Badge className="bg-orange-600 text-orange-50">Alpha</Badge>
           </span>
           <pre></pre>
-          <p className="text-center ml-4">🇵🇸</p>
+          <p className="text-center absolute right-64">🇵🇸</p>
         </div>
       </div>
     );
