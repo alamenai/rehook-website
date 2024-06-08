@@ -1,5 +1,6 @@
 {
   "use-abort-controller": "useAbortController",
+  "use-battery":"useBattery",
   "use-fetch": "useFetch",
   "use-history": "useHistory",
   "use-loading":"useLoading",
