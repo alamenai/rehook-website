@@ -5,5 +5,6 @@
   "use-local-storage": "useLocalStorage",
   "use-persistent-state": "usePersistentState",
   "use-query-params": "useQueryParams",
-  "use-timeout": "useTimeout"
+  "use-timeout": "useTimeout",
+  "use-url":"useUrl"
 }
