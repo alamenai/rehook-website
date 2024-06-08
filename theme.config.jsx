@@ -56,7 +56,8 @@ const config = {
       return (
         <div className="flex items-center justify-between relative w-full">
           <div>{title}</div>
-          {title === "useBattery" && (
+
+          {(title === "useUrl" || title === "useBattery") && (
             <Badge className=" absolute -right-[0.5em] bg-transparent border-lime-400 text-lime-500 px-[0.5em] hover:bg-transparent">
               New
             </Badge>
