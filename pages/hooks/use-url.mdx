@@ -1,0 +1,96 @@
+# useUrl
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for accessing URL information.</h3>
+
+## Add hook
+
+Create a file `use-url.ts` and copy & paste the code from [useUrl](/hooks/use-url#hook).
+
+## Usage
+
+```tsx {3,6}
+
+import React, { useEffect, useState } from 'react';
+import { useUrl } from './useUrl';
+
+function App() {
+    const { url, getRootPath, getQueryParams, getPort } = useUrl();
+
+    return (
+        <div>
+            <h1>URL Information</h1>
+            <p>Current URL: {url}</p>
+            <p>Root Path: {getRootPath()}</p>
+            <p>Query Parameters: {JSON.stringify(getQueryParams())}</p>
+            <p>Port: {getPort()}</p>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+## Hook
+
+```ts
+
+
+import { useEffect, useState } from 'react'
+
+export const useUrl = (fn?: () => void) => {
+    const [url] = useState(window.location.href)
+
+    useEffect(() => {
+        if (fn && typeof fn === 'function') {
+            fn()
+        }
+    }, [url, fn])
+
+    const getPort = () => {
+        return window.location.port
+    }
+
+    const getRootPath = () => {
+        const pathArray = window.location.pathname.split('/')
+        return pathArray[1] || ''
+    }
+
+    const getQueryParams = () => {
+        const searchParams = new URLSearchParams(window.location.search)
+        const queryParams: { [key: string]: string } = {}
+
+        for (const [key, value] of searchParams.entries()) {
+            queryParams[key] = value
+        }
+
+        return queryParams
+    }
+
+    return {
+        url,
+        getRootPath,
+        getQueryParams,
+        getPort,
+    }
+}
+
+
+```
+
+## API
+
+[`useUrl(fn?: () => void): { url: string, getRootPath: () => string, getQueryParams: () => { [key: string]: string }, getPort: () => string }`](/hooks/use-url#hook)
+
+A custom hook for accessing URL information.
+
+### Returns
+
+An object containing the following properties and methods:
+
+| Name             | Type             | Description                                                          |
+| ---------------- | ---------------- | -------------------------------------------------------------------- |
+| `url`            | `string`         | The current URL.                                                     |
+| `getRootPath`    | `() => string`   | A function that returns the root path of the URL.                    |
+| `getQueryParams` | `() => { [key: string]: string }` | A function that returns the query parameters of the URL.         |
+| `getPort`        | `() => string`   | A function that returns the port number of the URL.                  |
