@@ -1,0 +1,108 @@
+# useLoading
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook that provides functionalities for managing loading state in React components.</h3>
+
+### Add hook
+
+Create a file `use-loading.ts` and copy & paste the code from [useLoading](/hooks/use-loading#hook).
+
+### Usage
+
+```jsx {3,6,10,16}
+
+import React, { useEffect } from 'react';
+import { useLoading } from './hooks/use-loading';
+
+function App() {
+    const { loading, startLoading, stopLoadingAfter } = useLoading()
+
+    useEffect(() => {
+        if (loading) {
+            stopLoadingAfter(5000)
+        }
+    }, [loading])
+
+    return (
+        <>
+            <button onClick={() => startLoading()}>Load</button>
+            {loading && <p>Loading ....</p>}
+        </>
+    )
+}
+
+export default App;
+
+```
+
+### Hook
+
+```ts
+
+import { useEffect, useState } from 'react';
+
+export const useLoading = <T>(state?: boolean, data?: T) => {
+    const [loading, setLoading] = useState(state || false);
+
+    const startLoading = () => {
+        setLoading(true);
+    };
+
+    const startLoadingAfter = (timeout: number) => {
+        setTimeout(() => {
+            setLoading(true);
+        }, timeout);
+    };
+
+    const stopLoading = () => {
+        setLoading(false);
+    };
+
+    const stopLoadingAfter = (timeout: number) => {
+        setTimeout(() => {
+            setLoading(false);
+        }, timeout);
+    };
+
+    useEffect(() => {
+        if (data) {
+            setLoading(false);
+        }
+    }, [data]);
+
+    return {
+        loading,
+        startLoading,
+        stopLoading,
+        startLoadingAfter,
+        stopLoadingAfter,
+    };
+};
+
+```
+
+## API
+
+## API
+
+[`useLoading<T>(state?: boolean, data?: T): { loading: boolean, startLoading: () => void, startLoadingAfter: (timeout: number) => void, stopLoading: () => void, stopLoadingAfter: (timeout: number) => void }`](/hooks/use-loading#hook)
+
+A custom hook for managing loading state in React components.
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type | Description |
+| ---- | ---- | ----------- |
+| `state` | `boolean` (optional) | Initial loading state. Default is `false`. |
+| `data` | `T` (optional) | Data used to automatically stop loading. |
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+An object containing the following properties:
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| `loading` | `boolean` | Indicates whether the component is in a loading state. |
+| `startLoading` | `() => void` | Function to start loading immediately. |
+| `startLoadingAfter` | `(timeout: number) => void` | Function to start loading after a specified timeout. |
+| `stopLoading` | `() => void` | Function to stop loading immediately. |
+| `stopLoadingAfter` | `(timeout: number) => void` | Function to stop loading after a specified timeout. |

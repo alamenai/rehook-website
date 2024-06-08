@@ -3,6 +3,7 @@
   "use-battery":"useBattery",
   "use-fetch": "useFetch",
   "use-history": "useHistory",
+  "use-loading":"useLoading",
   "use-local-storage": "useLocalStorage",
   "use-persistent-state": "usePersistentState",
   "use-query-params": "useQueryParams",
