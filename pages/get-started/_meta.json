@@ -1,8 +1,6 @@
 {
-  "installation": {
-    "title": "Installation"
-  },
-  "changelog": {
-    "title": "Changelog"
-  }
+  "installation": "Installation",
+  "changelog":"Changelog",
+  "configuration":"Configuration",
+  "cli":"CLI"
 }
