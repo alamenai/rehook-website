@@ -1,0 +1,86 @@
+# useMouse
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for tracking mouse position and handling mouse events.</h3>
+
+## Add hook
+
+Create a file `use-mouse.ts` and copy & paste the code from [useMouse](/hooks/use-mouse#hook).
+
+## Usage
+
+```tsx {3,6} copy
+
+import React from 'react';
+import { useMouse } from './useMouse';
+
+function App() {
+    const mousePosition = useMouse('mousemove');
+
+    return (
+        <div>
+            <h1>Mouse Position</h1>
+            <p>X: {mousePosition?.x}</p>
+            <p>Y: {mousePosition?.y}</p>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+## Hook
+
+```ts copy
+
+import { useEffect, useState } from 'react';
+
+interface MousePosition {
+    x: number | undefined;
+    y: number | undefined;
+}
+
+export const useMouse = (eventType: 'mousemove' | 'mouseenter' | 'click', callback?: () => void): MousePosition => {
+    const [mousePosition, setMousePosition] = useState<MousePosition>({ x: undefined, y: undefined });
+
+    const updateMousePosition = (event: MouseEvent) => {
+        setMousePosition({
+            x: event.clientX,
+            y: event.clientY,
+        });
+
+        if (callback) callback();
+    };
+
+    useEffect(() => {
+        window.addEventListener(eventType, updateMousePosition);
+
+        return () => {
+            window.removeEventListener(eventType, updateMousePosition);
+        };
+    }, [eventType, callback]);
+
+    return mousePosition;
+}
+
+
+```
+
+## API
+
+<h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Name       | Type                                         | Description                                                                 |
+| ---------- | -------------------------------------------- | --------------------------------------------------------------------------- |
+| `eventType`| `mousemove \| mouseente \| click`                           | The type of mouse event to listen for.                                      |
+| `callback` | `() => void`                                  | (Optional) A function to call when the specified mouse event is triggered.  |
+
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+An object containing the following properties:
+
+| Name | Type                | Description                                      |
+| ---- | ------------------- | ------------------------------------------------ |
+| `x`  | `number \| undefined` | The x-coordinate of the mouse pointer.           |
+| `y`  | `number \| undefined` | The y-coordinate of the mouse pointer.           |
+
