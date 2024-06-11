@@ -4,10 +4,10 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 export const darkMode = ["class"];
 export const content = [
   "./pages/**/*.{js,jsx,mdx}",
-  "./components/**/*.{js,jsx}",
+  "./components/**/*.{js,jsx,tsx}",
   "./app/**/*.{js,jsx,mdx}",
   "./src/**/*.{js,jsx,mdx}",
-  "./theme.config.jsx"
+  "./theme.config.jsx",
 ];
 export const prefix = "";
 export const theme = {
