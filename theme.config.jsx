@@ -65,6 +65,11 @@ const config = {
               New
             </Badge>
           )}
+          {title === "useFetch" && (
+            <Badge className=" absolute -right-[0.5em] bg-transparent border-pink-500 text-pink-500 px-[0.5em] hover:bg-transparent">
+              Updated
+            </Badge>
+          )}
         </div>
       );
     },
