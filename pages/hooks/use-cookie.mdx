@@ -1,0 +1,124 @@
+# useCookie
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for managing cookies.</h3>
+
+## Add hook
+
+Create a file `use-cookie.ts` and copy & paste the code from [useCookie](/hooks/use-cookie#hook).
+
+## Usage
+
+```tsx {3,6} copy
+
+import React from 'react';
+import { useCookie } from './use-cookie';
+
+function App() {
+    const [userToken, setUserToken] = useCookie('token', '');
+
+    const handleLogin = (token: string) => {
+        setUserToken(token, { days: 7, path: '/', SameSite: 'Strict', Secure: true });
+    };
+
+    return (
+        <div>
+            <h1>useCookie Example</h1>
+            <p>Token: {userToken}</p>
+            <button onClick={() => handleLogin('newTokenValue')}>Login</button>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+## Hook
+
+```ts copy
+// Original implementation
+// https://github.com/tylerwolff/useCookie
+
+import { useCallback, useState } from 'react'
+
+type CookieOptions = {
+
+    days?: number
+    path?: string
+    domain?: string
+    SameSite?: 'None' | 'Lax' | 'Strict'
+    Secure?: boolean
+    HttpOnly?: boolean
+}
+
+export const useCookie = (key: string, initialValue: string) => {
+    const [item, setItem] = useState(() => {
+        return getCookie(key, initialValue)
+    })
+
+    const updateItem = useCallback(
+        (value: string, options: CookieOptions) => {
+            setItem(value)
+            setCookie(key, value, options)
+        },
+        [key],
+    )
+
+    return [item, updateItem]
+}
+
+export const stringifyOptions = (options: { [key: string]: boolean | number | string | undefined }) => {
+    return Object.keys(options).reduce((acc, key) => {
+        if (key === 'days') {
+            return acc
+        } else {
+            if (options[key] === false) {
+                return acc
+            } else if (options[key] === true) {
+                return `${acc}; ${key}`
+            } else {
+                return `${acc}; ${key}=${options[key]}`
+            }
+        }
+    }, '')
+}
+
+export const setCookie = (key: string, value: string, options: CookieOptions) => {
+    const optionsWithDefaults = {
+        days: 7,
+        path: '/',
+        ...options,
+    }
+
+    const expires = new Date(Date.now() + optionsWithDefaults.days * 864e5).toUTCString()
+
+    document.cookie =
+        key + '=' + encodeURIComponent(value) + '; expires=' + expires + stringifyOptions(optionsWithDefaults)
+}
+
+export const getCookie = (name: string, initialValue = '') => {
+    return (
+        document.cookie.split('; ').reduce((r, v) => {
+            const parts = v.split('=')
+            return parts[0] === name ? decodeURIComponent(parts[1]) : r
+        }, '') || initialValue
+    )
+}
+
+```
+
+## API
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter     | Type     | Description                                             |
+|---------------|----------|---------------------------------------------------------|
+| `key`         | `string` | The name of the cookie.                                 |
+| `initialValue`| `string` | The initial value of the cookie if it doesn't exist.    |
+
+ <h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Name         | Type                                             | Description                                                        |
+|--------------|--------------------------------------------------|--------------------------------------------------------------------|
+| `item`       | `string`                                         | The current value of the cookie.                                   |
+| `updateItem` | `(value: string, options: CookieOptions) => void`| A function to update the cookie's value and options.               |
