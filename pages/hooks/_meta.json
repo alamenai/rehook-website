@@ -10,6 +10,7 @@
   "use-local-storage": "useLocalStorage",
   "use-persistent-state": "usePersistentState",
   "use-query-params": "useQueryParams",
+  "use-session": "useSession",
   "use-timeout": "useTimeout",
   "use-unsaved-form-changes": "useUnsavedFormChanges",
   "use-url": "useUrl"

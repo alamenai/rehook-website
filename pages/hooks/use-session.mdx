@@ -1,0 +1,206 @@
+import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
+
+# useSession
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for managing session storage.</h3>
+
+## Usage
+
+```tsx {3,7,8,9,10,11,12,13,14,15,16,17} copy
+
+import React from 'react';
+import { useSession } from './useSession';
+
+function App() {
+    const {
+        session,
+        getValue,
+        getMultipleValues,
+        addItem,
+        addMultipleItems,
+        renameKey,
+        deleteItem,
+        deleteItemAfterDelay,
+        deleteMultipleItems,
+        clearSessionStorage,
+    } = useSession();
+
+    return (
+        <div>
+            <h1>useSession Example</h1>
+            <button onClick={() => addItem('key1', 'value1')}>Add Item</button>
+            <button onClick={() => deleteItem('key1')}>Delete Item</button>
+            <button onClick={() => clearSessionStorage()}>Clear Session Storage</button>
+            <p>Session Data: {JSON.stringify(session)}</p>
+        </div>
+    );
+}
+
+export default App;
+
+
+```
+
+## Hook
+
+```ts copy
+import { useEffect, useState } from 'react'
+
+export type Item = string | number | object | null
+
+export const useSession = (fn?: () => void) => {
+    const items = getCurrentSession()
+
+    const [session, setSession] = useState<{ [x: string]: Item }[]>(items)
+
+    useEffect(() => {
+        if (fn && typeof fn == 'function') {
+            fn()
+        }
+    }, [session, fn])
+
+    const getValue = (itemKey: string) => {
+        const items = Object.values(session)
+
+        for (const item of items) {
+            if (itemKey in item) {
+                return item[itemKey]
+            }
+        }
+
+        return null
+    }
+
+    const renameKey = (oldKey: string, newKey: string) => {
+        const item = checkItem(oldKey)
+
+        if (!item) {
+            throw new Error('This item does not exist in the session storage')
+        }
+
+        const value = sessionStorage.getItem(oldKey)
+
+        sessionStorage.removeItem(oldKey)
+
+        if (value) {
+            sessionStorage.setItem(newKey, value)
+            setSession(getCurrentSession())
+        }
+    }
+
+    const getMultipleValues = (keys: string[]) => {
+        const multipleValues: string[] = []
+
+        keys.forEach(key => {
+            const value = getValue(key) as string
+            multipleValues.push(value)
+        })
+
+        return multipleValues
+    }
+
+    const addItem = (key: string, value: Item) => {
+        if (typeof value === 'object') {
+            sessionStorage.setItem(key, JSON.stringify(value))
+        }
+
+        if (typeof value === 'number') {
+            sessionStorage.setItem(key, value.toString())
+        }
+
+        if (typeof value === 'string') {
+            sessionStorage.setItem(key, value)
+        }
+
+        setSession([...session, { [key]: value }])
+    }
+
+    const addMultipleItems = (items: { key: string; value: string }[]) => {
+        for (const item of items) {
+            addItem(item.key, item.value)
+        }
+    }
+
+    const deleteItem = (key: string) => {
+        const item = checkItem(key)
+        if (!item) {
+            throw new Error('This item does not exist in the session storage')
+        }
+
+        if (item) {
+            sessionStorage.removeItem(key)
+            setSession(getCurrentSession())
+        }
+    }
+
+    const deleteItemAfterDelay = (key: string, time: number) => {
+        setTimeout(() => {
+            deleteItem(key)
+        }, time)
+    }
+
+    const deleteMultipleItems = (keys: string[]) => {
+        keys.forEach(key => {
+            deleteItem(key)
+        })
+    }
+
+    const clearsessionStorage = () => {
+        sessionStorage.clear()
+        setSession([])
+    }
+
+    return {
+        session,
+        getValue,
+        getMultipleValues,
+        addItem,
+        addMultipleItems,
+        renameKey,
+        deleteItem,
+        deleteItemAfterDelay,
+        deleteMultipleItems,
+        clearsessionStorage,
+    }
+}
+
+export const checkItem = (key: string) => sessionStorage.getItem(key)
+
+export const getCurrentSession = () => {
+    const items: { [x: string]: string | null }[] = []
+
+    const keys = Object.keys(sessionStorage)
+
+    keys.forEach(key => {
+        items.push({ [key]: sessionStorage.getItem(key) })
+    })
+
+    return items
+}
+
+
+```
+
+## API
+
+ <h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| `fn`      | `() => void` (optional) | A function to run on session state change. |
+
+ <h1 className='text-xl font-medium mt-6'>Returs</h1>
+
+| Name                  | Type                               | Description                                      |
+| --------------------- | ---------------------------------- | ------------------------------------------------ |
+| `session`             | `{ [x: string]: Item }[]`          | The current session state.                       |
+| `getValue`            | `(itemKey: string) => Item`        | Retrieves the value of a specific item.          |
+| `getMultipleValues`   | `(keys: string[]) => string[]`     | Retrieves the values of multiple items.          |
+| `addItem`             | `(key: string, value: Item) => void` | Adds an item to the session storage.             |
+| `addMultipleItems`    | `(items: { key: string; value: string }[]) => void` | Adds multiple items to the session storage. |
+| `renameKey`           | `(oldKey: string, newKey: string) => void` | Renames a key in the session storage.            |
+| `deleteItem`          | `(key: string) => void`            | Deletes an item from the session storage.        |
+| `deleteItemAfterDelay`| `(key: string, time: number) => void` | Deletes an item after a delay.                   |
+| `deleteMultipleItems` | `(keys: string[]) => void`         | Deletes multiple items from the session storage. |
+| `clearSessionStorage` | `() => void`                       | Clears all items from the session storage.       |
+
