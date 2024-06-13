@@ -1,6 +1,7 @@
 {
   "use-abort-controller": "useAbortController",
   "use-battery": "useBattery",
+  "use-cookie": "useCookie",
   "use-env": "useEnv",
   "use-fetch": "useFetch",
   "use-history": "useHistory",
