@@ -6,6 +6,7 @@
   "use-fetch": "useFetch",
   "use-history": "useHistory",
   "use-loading": "useLoading",
+  "use-media-query": "useMediaQuery",
   "use-mouse": "useMouse",
   "use-local-storage": "useLocalStorage",
   "use-persistent-state": "usePersistentState",

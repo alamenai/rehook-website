@@ -77,7 +77,8 @@ const config = {
             title === "useMouse" ||
             title === "useUnsavedFormChanges" ||
             title === "useCookie" ||
-            title === "useSession") && (
+            title === "useSession" ||
+            title === "useMediaQuery") && (
             <Badge className=" absolute -right-[0.5em] bg-transparent border-lime-400 text-lime-500 px-[0.5em] hover:bg-transparent">
               New
             </Badge>
