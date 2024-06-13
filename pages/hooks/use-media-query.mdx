@@ -1,0 +1,130 @@
+import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
+
+# useMediaQuery
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for managing responsive media queries.</h3>
+
+## Usage
+
+```tsx {3,7,8,9,10,11,12,13,14,15,16,17} copy
+
+import React from 'react';
+import { useMediaQuery } from './useMediaQuery';
+
+function App() {
+    const { mediaWidth, resize } = useMediaQuery('md');
+
+    return (
+        <div>
+            <h1>useMediaQuery Example</h1>
+            <p>Current Media Width: {mediaWidth}px</p>
+            <button onClick={() => resize('sm')}>Resize to Small</button>
+            <button onClick={() => resize('lg')}>Resize to Large</button>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+
+## Hook
+
+```ts
+
+import { useEffect, useState } from 'react'
+
+type MediaQuery = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+const initWidth = (type: MediaQuery): number => {
+    switch (type) {
+        case 'xs': {
+            return 320
+        }
+
+        case 'sm': {
+            return 480
+        }
+        case 'md': {
+            return 768
+        }
+
+        case 'lg': {
+            return 1024
+        }
+
+        case 'xl': {
+            return 1200
+        }
+
+        default: {
+            return 1200
+        }
+    }
+}
+
+export const useMediaQuery = (type: MediaQuery) => {
+    const initialMediaWidth = initWidth(type)
+
+    const [mediaWidth, setMediaWidth] = useState<number>(initialMediaWidth)
+
+    const resize = (type: MediaQuery) => {
+        switch (type) {
+            case 'xs': {
+                setMediaWidth(320)
+                return mediaWidth
+            }
+
+            case 'sm': {
+                setMediaWidth(480)
+                break
+            }
+            case 'md': {
+                setMediaWidth(768)
+                break
+            }
+
+            case 'lg': {
+                setMediaWidth(1024)
+                break
+            }
+
+            case 'xl': {
+                setMediaWidth(1200)
+                break
+            }
+
+            default: {
+                setMediaWidth(1200)
+            }
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', () => setMediaWidth(innerWidth))
+    }, [])
+
+    return { mediaWidth, resize }
+}
+
+```
+
+## API
+
+<h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Parameter | Type        | Description                                      |
+| --------- | ----------- | ------------------------------------------------ |
+| `type`    | `MediaQuery`| The type of media query to initialize with.      |
+
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Name        | Type                             | Description                                     |
+| ----------- | -------------------------------- | ----------------------------------------------- |
+| `mediaWidth`| `number`                         | The current media width.                        |
+| `resize`    | `(type: MediaQuery) => void`     | Function to resize to a specific media query.   |
+
+## Contributors
+
+<AvatarCircles numPeople={2} avatarUrls={["https://avatars.githubusercontent.com/u/20143684?v=4"]}  className="mt-6"/>
