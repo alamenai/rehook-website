@@ -1,0 +1,85 @@
+# useUnsavedFormChanges
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook to manage unsaved form changes and warn users before leaving the page.</h3>
+
+## Add hook
+
+Create a file `use-unsaved-form-changes.ts` and copy & paste the code from [useUnsavedFormChanges](/hooks/use-unsaved-form-changes#hook).
+
+## Usage
+
+```tsx {3,6}
+
+import React from 'react';
+import { useUnsavedFormChanges } from './hooks/use-unsaved-form-changes';
+
+function App() {
+    const { isFormChanged, setFormChanged } = useUnsavedFormChanges();
+
+    const handleChange = () => {
+        setFormChanged(true);
+    };
+
+    const handleSave = () => {
+        setFormChanged(false);
+    };
+
+    return (
+        <div>
+            <h1>useUnsavedFormChanges Example</h1>
+            <form>
+                <input type="text" onChange={handleChange} />
+                <button type="button" onClick={handleSave}>Save</button>
+            </form>
+            {isFormChanged && <p>You have unsaved changes!</p>}
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+## Hook
+
+```tsx
+
+import { useEffect, useState } from 'react';
+
+export function useUnsavedFormChanges() {
+    const [isFormChanged, setIsFormChanged] = useState(false);
+
+    const setFormChanged = (value: boolean) => {
+        setIsFormChanged(value);
+    };
+
+    useEffect(() => {
+        const handleBeforeUnload = (event: { returnValue: string }) => {
+            if (isFormChanged) {
+                const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+                event.returnValue = confirmationMessage;
+                return confirmationMessage;
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [isFormChanged]);
+
+    return { isFormChanged, setFormChanged };
+}
+
+```
+
+## API
+
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| `isFormChanged` | `boolean` | Indicates whether the form has unsaved changes. |
+| `setFormChanged` | `(value: boolean) => void` | A function to set the `isFormChanged` state. |
+

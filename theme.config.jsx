@@ -76,6 +76,7 @@ const config = {
             title === "useUrl" ||
             title === "useEnv" ||
             title === "useMouse" ||
+            title === "useUnsavedFormChanges" ||
             title === "useCookie") && (
             <Badge className=" absolute -right-[0.5em] bg-transparent border-lime-400 text-lime-500 px-[0.5em] hover:bg-transparent">
               New
