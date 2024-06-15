@@ -1,0 +1,208 @@
+import { FileTree } from 'nextra/components'
+import { Steps } from 'nextra/components'
+
+# Contribution
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">How to contribute to Rehook and share your custom hook.</h3>
+
+Thank you for your interest in contributing to Rehook! 
+
+I appreciate your support and look forward to your contributions. 
+
+This guide will help you understand the directory structure and provide detailed instructions on how to add a new hook to Rehook.
+
+Once done, open a pull request from your forked repo to the main repo [here](https://github.com/alamenai/rehook/compare).
+
+## Getting Started
+
+<Steps>
+
+### Fork and Clone the Repository
+
+
+1. **[Fork](https://github.com/alamenai/rehook/fork) the repository**  
+
+<br/>
+
+
+2. **Clone your forked repository to your local machine**
+
+    ```bash
+    git clone https://github.com/<YOUR_USERNAME>/rehook.git
+    ```
+
+3. **Navigate to the project directory**
+
+    ```bash
+    cd rehook
+    ```
+
+4. **Create a new branch for your changes**
+
+    ```bash
+    git checkout -b my-new-branch
+    ```
+
+5. **Install dependencies**
+
+    ```bash
+    npm install
+    ```
+
+6. **Run the project**
+    ```bash
+    npm run dev
+    ```
+
+### Adding a New Hook
+
+
+To add a new hook to Rehook, you will need to add and modify several files. Follow these steps:
+
+##### 1. Create Your Hook
+
+<FileTree>
+  <FileTree.Folder name="src" defaultOpen>
+    <FileTree.Folder name="hooks" defaultOpen>
+      <FileTree.File name="use-example.ts" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+
+```ts
+const useExample = () => {
+    // Your code here
+}
+```
+
+##### 2. Test Your Hook
+
+
+<FileTree>
+  <FileTree.Folder name="src" defaultOpen>
+    <FileTree.Folder name="hooks" defaultOpen>
+    <FileTree.Folder name="__tests__" defaultOpen>
+      <FileTree.File name="use-example.spec.ts" />
+    </FileTree.Folder>
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+
+```ts
+describe('useExample', () => {
+    // Your test cases here
+})
+```
+
+
+### Document Your Hook
+
+Go to [rehook-wesbite](https://github.com/alamenai/rehook-website) repository and clone it.
+
+##### 1. Create MDX page
+
+<FileTree>
+  <FileTree.Folder name="pages" defaultOpen>
+    <FileTree.Folder name="hooks" defaultOpen>
+      <FileTree.File name="use-example.mdx" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+```mdx
+
+# useExample
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">Description.</h3>
+
+## Add hook
+
+Create a file `use-example.ts` and copy & paste the code from [useExample](/hooks/use-example#hook).
+
+## Usage
+
+function App() {
+const {example} = useExample()
+}
+
+export default App
+
+### Hook
+
+const Example = ()=>{
+    // Your code here
+}
+
+export default Example
+
+## API
+
+<h3 className="text-xl font-medium mt-6">Parameters</h3>
+
+| Parameter | Type   | Description  |
+| --------- | ------ | ------------ |
+| `name`    | `type` | Description. |
+|           |
+
+
+<h3 className="text-xl font-medium mt-6">Returns</h3>
+
+| Name   | Type   | Description  |
+| ------ | ------ | ------------ |
+| `name` | `type` | Description. |
+```
+
+##### 2. Add Page Meta
+
+<FileTree>
+  <FileTree.Folder name="pages" defaultOpen>
+    <FileTree.Folder name="hooks" defaultOpen>
+      <FileTree.File name="_meta.json" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+</FileTree>
+
+```json
+
+"use-example":"useExample"
+
+```
+
+##### 3. Add New Badge
+
+<FileTree> 
+  <FileTree.Folder name="rehook-website" defaultOpen>
+   <FileTree.File name="theme.config.jsx" />
+  </FileTree.Folder>
+</FileTree>
+
+```tsx {6,7,8,9,10,11}
+  sidebar: {
+    titleComponent({ title, type }) {
+      return (
+        <div className="flex items-center justify-between relative w-full">
+          <div>{title}</div>
+          {(title === "useExample"
+           ) && (
+            <Badge className=" absolute -right-[0.5em] bg-transparent border-rose-500 text-rose-500 px-[0.5em] hover:bg-transparent">
+              New
+            </Badge>
+          )}
+        </div>
+      );
+    },
+  },
+
+```
+
+### That's it!
+
+## Ask for Help
+
+For any help or questions, please open a new [GitHub issue](https://github.com/alamenai/rehook/issues/new) and we will get back to you.
+
+</Steps>
+
+
