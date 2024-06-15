@@ -10,37 +10,6 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 Create a file `use-history.ts` and copy & paste the code from [useHistory](/hooks/use-history#hook).
 
 
-### Usage
-
-```tsx {3,7} copy
-
-import React from 'react';
-import { useHistory } from './hooks/use-history';
-
-
-function App() {
-    const { back, forward, go, push, replace, currentPosition, numberOfPages } = useHistory();
-
-    return (
-        <div>
-            <h1>History Navigation Example</h1>
-            <p>Current Position: {currentPosition}</p>
-            <p>Number of Pages in History: {numberOfPages}</p>
-            <button onClick={back}>Go Back</button>
-            <button onClick={forward}>Go Forward</button>
-            <button onClick={() => go(-2)}>Go Back 2 Steps</button>
-            <button onClick={() => go(2)}>Go Forward 2 Steps</button>
-            <button onClick={() => push('/new-page')}>Push New Page</button>
-            <button onClick={() => replace('/replacement-page')}>Replace Current Page</button>
-        </div>
-    );
-}
-
-export default App;
-
-```
-
-
 ### Hook
 
 ```ts copy
@@ -96,49 +65,50 @@ export const useHistory = () => {
 
 ```
 
+### Usage
+
+```tsx {3,7} copy
+
+import React from 'react';
+import { useHistory } from './hooks/use-history';
+
+
+function App() {
+    const { back, forward, go, push, replace, currentPosition, numberOfPages } = useHistory();
+
+    return (
+        <div>
+            <h1>History Navigation Example</h1>
+            <p>Current Position: {currentPosition}</p>
+            <p>Number of Pages in History: {numberOfPages}</p>
+            <button onClick={back}>Go Back</button>
+            <button onClick={forward}>Go Forward</button>
+            <button onClick={() => go(-2)}>Go Back 2 Steps</button>
+            <button onClick={() => go(2)}>Go Forward 2 Steps</button>
+            <button onClick={() => push('/new-page')}>Push New Page</button>
+            <button onClick={() => replace('/replacement-page')}>Replace Current Page</button>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
 
 ## API
 
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
 
-[`back(): void`](/hooks/use-history#hook)
-
-Navigates to the previous page in the session history.
-
-[`forward(): void`](/hooks/use-history#hookk)
-
-Navigates to the next page in the session history.
-
-[`go(step: number): void`](/hooks/use-history#hook)
-
-Navigates to a specific page in the session history, relative to the current page.
-
-| Parameter | Type     | Description                                    |
-|-----------|----------|------------------------------------------------|
-| `step`    | `number` | The number of pages to move in the history.    |
-
-[`push(path: string): void`](/hooks/use-history#hook)
-
-Pushes a new entry onto the session history stack with the specified URL.
-
-| Parameter | Type     | Description                                     |
-|-----------|----------|-------------------------------------------------|
-| `path`    | `string` | The URL of the new history entry to push.      |
-
-[`replace(path: string): void`](/hooks/use-history#hook)
-
-Replaces the current entry in the session history with the specified URL.
-
-| Parameter | Type     | Description                                         |
-|-----------|----------|-----------------------------------------------------|
-| `path`    | `string` | The URL to replace the current history entry with. |
-
-[`currentPosition`](/hooks/use-history#hook)
-
-A number representing the current position in the session history.
-
-[`numberOfPages`](/hooks/use-history#hook)
-
-A number representing the total number of pages in the session history.
+| Name                                                                    | Description                                                                 |
+|---------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| `back(): void`                             | Navigates to the previous page in the session history.                      |
+| `forward(): void`                         | Navigates to the next page in the session history.                          |
+| `go(step: number): void`                    | Navigates to a specific page in the session history, relative to the current page. |
+| `push(path: string): void`                   | Pushes a new entry onto the session history stack with the specified URL.   |
+| `replace(path: string): void`               | Replaces the current entry in the session history with the specified URL.   |
+| `currentPosition`                         | A number representing the current position in the session history.          |
+| `numberOfPages`                             | A number representing the total number of pages in the session history.     |
 
 
 ## Contributors
