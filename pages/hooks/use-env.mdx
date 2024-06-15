@@ -12,72 +12,6 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 Create a file `use-env.ts` and copy & paste the code from [useEnv](/hooks/use-env#hook).
 
 
-### Usage
-
-```tsx {3,6,13,14,21,22} copy
-
-import { useState } from 'react'
-import { useEnv } from './hooks/use-env'
-
-function App() {
-    const { variables, addVariable, updateVariable, saveVariable, removeVariable, deleteVariable } = useEnv()
-
-    const [newVariable, setNewVariable] = useState('')
-    const [newValue, setNewValue] = useState('')
-
-    const handleAddVariable = () => {
-        if (newVariable.trim() !== '' && newValue.trim() !== '') {
-            addVariable(newVariable, newValue)
-            saveVariable(newVariable, newValue)
-            setNewVariable('')
-            setNewValue('')
-        }
-    }
-
-    const handleUpdateVariable = (variable: string, newValue: string) => {
-        updateVariable(variable, newValue)
-        saveVariable(variable, newValue)
-    }
-
-    return (
-        <div className="App">
-            <h1>Environment Variables</h1>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Variable"
-                    value={newVariable}
-                    onChange={e => setNewVariable(e.target.value)}
-                />
-                <input type="text" placeholder="Value" value={newValue} onChange={e => setNewValue(e.target.value)} />
-                <button onClick={handleAddVariable}>Add Variable</button>
-            </div>
-            <div>
-                <h2>Existing Variables:</h2>
-                <ul>
-                    {Object.entries(variables).map(([variable, value]) => (
-                        <li key={variable}>
-                            {variable}: {value}{' '}
-                            <button onClick={() => handleUpdateVariable(variable, prompt('Enter new value:'))}>
-                                Update
-                            </button>
-                            <button onClick={() => removeVariable(variable)}>Remove</button>
-                            <button onClick={() => deleteVariable(variable)}>Delete</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    )
-}
-
-export default App
-
-
-
-```
-
-
 ### Hook
 
 
@@ -163,19 +97,77 @@ export const useEnv = () => {
 
 ```
 
+### Usage
+
+```tsx {3,6,13,14,21,22} copy
+
+import { useState } from 'react'
+import { useEnv } from './hooks/use-env'
+
+function App() {
+    const { variables, addVariable, updateVariable, saveVariable, removeVariable, deleteVariable } = useEnv()
+
+    const [newVariable, setNewVariable] = useState('')
+    const [newValue, setNewValue] = useState('')
+
+    const handleAddVariable = () => {
+        if (newVariable.trim() !== '' && newValue.trim() !== '') {
+            addVariable(newVariable, newValue)
+            saveVariable(newVariable, newValue)
+            setNewVariable('')
+            setNewValue('')
+        }
+    }
+
+    const handleUpdateVariable = (variable: string, newValue: string) => {
+        updateVariable(variable, newValue)
+        saveVariable(variable, newValue)
+    }
+
+    return (
+        <div className="App">
+            <h1>Environment Variables</h1>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Variable"
+                    value={newVariable}
+                    onChange={e => setNewVariable(e.target.value)}
+                />
+                <input type="text" placeholder="Value" value={newValue} onChange={e => setNewValue(e.target.value)} />
+                <button onClick={handleAddVariable}>Add Variable</button>
+            </div>
+            <div>
+                <h2>Existing Variables:</h2>
+                <ul>
+                    {Object.entries(variables).map(([variable, value]) => (
+                        <li key={variable}>
+                            {variable}: {value}{' '}
+                            <button onClick={() => handleUpdateVariable(variable, prompt('Enter new value:'))}>
+                                Update
+                            </button>
+                            <button onClick={() => removeVariable(variable)}>Remove</button>
+                            <button onClick={() => deleteVariable(variable)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    )
+}
+
+export default App
+
+
+
+```
+
+
+
+
 ## API
 
-[`useEnv(): { variables: { [key: string]: string }, addVariable: (variable: string, value: string) => void, renameVariable: (oldVar: string, newVar: string) => void, updateVariable: (currentVar: string, newValue: string) => void, removeVariable: (currentVar: string) => void, saveVariable: (variable: string, value: string) => void, deleteVariable: (variable: string) => void }`]
-
-A custom hook for managing environment variables.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-This hook does not take any parameters.
-
  <h1 className='text-xl font-medium mt-6'>Returns</h1>
-
-An object containing the following properties:
 
 | Name             | Type                                                | Description                                                  |
 | ---------------- | --------------------------------------------------- | ------------------------------------------------------------ |
