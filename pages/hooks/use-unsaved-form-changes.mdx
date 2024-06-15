@@ -1,48 +1,16 @@
+import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
+
 # useUnsavedFormChanges
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook to manage unsaved form changes and warn users before leaving the page.</h3>
 
-## Add hook
+### Add hook
 
 Create a file `use-unsaved-form-changes.ts` and copy & paste the code from [useUnsavedFormChanges](/hooks/use-unsaved-form-changes#hook).
 
-## Usage
+### Hook
 
-```tsx {3,6}
-
-import React from 'react';
-import { useUnsavedFormChanges } from './hooks/use-unsaved-form-changes';
-
-function App() {
-    const { isFormChanged, setFormChanged } = useUnsavedFormChanges();
-
-    const handleChange = () => {
-        setFormChanged(true);
-    };
-
-    const handleSave = () => {
-        setFormChanged(false);
-    };
-
-    return (
-        <div>
-            <h1>useUnsavedFormChanges Example</h1>
-            <form>
-                <input type="text" onChange={handleChange} />
-                <button type="button" onClick={handleSave}>Save</button>
-            </form>
-            {isFormChanged && <p>You have unsaved changes!</p>}
-        </div>
-    );
-}
-
-export default App;
-
-```
-
-## Hook
-
-```tsx
+```tsx copy
 
 import { useEffect, useState } from 'react';
 
@@ -74,6 +42,40 @@ export function useUnsavedFormChanges() {
 
 ```
 
+### Usage
+
+```tsx {3,6} copy
+
+import React from 'react';
+import { useUnsavedFormChanges } from './hooks/use-unsaved-form-changes';
+
+function App() {
+    const { isFormChanged, setFormChanged } = useUnsavedFormChanges();
+
+    const handleChange = () => {
+        setFormChanged(true);
+    };
+
+    const handleSave = () => {
+        setFormChanged(false);
+    };
+
+    return (
+        <div>
+            <h1>useUnsavedFormChanges Example</h1>
+            <form>
+                <input type="text" onChange={handleChange} />
+                <button type="button" onClick={handleSave}>Save</button>
+            </form>
+            {isFormChanged && <p>You have unsaved changes!</p>}
+        </div>
+    );
+}
+
+export default App;
+
+```
+
 ## API
 
 <h1 className='text-xl font-medium mt-6'>Returns</h1>
@@ -83,3 +85,7 @@ export function useUnsavedFormChanges() {
 | `isFormChanged` | `boolean` | Indicates whether the form has unsaved changes. |
 | `setFormChanged` | `(value: boolean) => void` | A function to set the `isFormChanged` state. |
 
+
+## Contributors
+
+<AvatarCircles numPeople={2} avatarUrls={["https://avatars.githubusercontent.com/u/20143684?v=4"]}  className="mt-6"/>
