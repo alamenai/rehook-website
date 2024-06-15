@@ -4,12 +4,67 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 # useAbortController
 
-<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for managing operations with an AbortController instance. This hook provides functionalities for aborting operations, checking if aborted, and managing abort conditions.</h3>
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for managing operations with an AbortController instance.</h3>
 
 
 ### Add hook
  
 Create a file `use-abort-controller.ts` and copy & paste the code from [useAbortController](/hooks/use-abort-controller#hook).
+
+
+
+### Hook
+
+```ts copy
+import { useRef, useState } from 'react'
+
+export const useAbortController = (controller: AbortController) => {
+    if (!controller) {
+        throw new Error('AbortController instance is required. Make sure to provide a valid AbortController.')
+    }
+
+    const [isAborted, setIsAborted] = useState(false)
+
+    const controllerRef = useRef(controller)
+
+    const getSignal = () => {
+        return controllerRef.current.signal
+    }
+
+    const abort = () => {
+        controllerRef.current.abort()
+        setIsAborted(true)
+    }
+
+    const abortAfter = (time: number) => {
+        setTimeout(() => {
+            abort()
+        }, time)
+    }
+
+    const abortIf = (fn: (arg?: unknown) => unknown) => {
+        if (fn()) {
+            abort()
+        }
+    }
+
+    const abortIfAfter = (fn: (arg?: unknown) => unknown, time: number) => {
+        if (fn()) {
+            abortAfter(time)
+        }
+    }
+
+    return {
+        getSignal,
+        abort,
+        abortAfter,
+        abortIf,
+        abortIfAfter,
+        isAborted,
+    }
+}
+
+```
 
 ### Usage
 
@@ -85,120 +140,25 @@ export default App
 
  ```
 
-
-### Hook
-
-```ts copy
-import { useRef, useState } from 'react'
-
-export const useAbortController = (controller: AbortController) => {
-    if (!controller) {
-        throw new Error('AbortController instance is required. Make sure to provide a valid AbortController.')
-    }
-
-    const [isAborted, setIsAborted] = useState(false)
-
-    const controllerRef = useRef(controller)
-
-    const getSignal = () => {
-        return controllerRef.current.signal
-    }
-
-    const abort = () => {
-        controllerRef.current.abort()
-        setIsAborted(true)
-    }
-
-    const abortAfter = (time: number) => {
-        setTimeout(() => {
-            abort()
-        }, time)
-    }
-
-    const abortIf = (fn: (arg?: unknown) => unknown) => {
-        if (fn()) {
-            abort()
-        }
-    }
-
-    const abortIfAfter = (fn: (arg?: unknown) => unknown, time: number) => {
-        if (fn()) {
-            abortAfter(time)
-        }
-    }
-
-    return {
-        getSignal,
-        abort,
-        abortAfter,
-        abortIf,
-        abortIfAfter,
-        isAborted,
-    }
-}
-
-```
-
-
 ## API
-
-[`useAbortController(controller: AbortController): Object`](/hooks/use-abort-controller#hook)
-
-Creates an instance of the useAbortController hook.
 
  <h1 className='text-xl font-medium mt-6'>Parameters</h1>
 
-| Parameter | Type    | Description                    |
+| Name | Type    | Description                    |
 |-----------|---------|--------------------------------|
 | `controller`  | AbortController  | The AbortController instance to manage operations.|
 
-[`getSignal(): AbortSignal`](/hooks/use-abort-controller#hook)
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
 
-Retrieves the AbortSignal associated with the provided controller.
+| Name                                                                                 | Description                                                                |
+|-----------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `getSignal(): AbortSignal`                       | Retrieves the AbortSignal associated with the provided controller.         |
+| `abort(): void`                                   | Aborts the associated operation.                                           |
+| `abortAfter(time: number): void`                  | Aborts the associated operation after a specified delay.                   |
+| `abortIf(fn: (arg?: unknown) => unknown): void`    | Aborts the operation if the provided condition is met.                     |
+| `abortIfAfter(fn: (arg?: unknown) => unknown, time: number): void` | Aborts the operation if the provided condition is met after a specified delay. |
+| `isAborted: boolean`                            | A boolean state indicating whether the operation has been aborted.         |
 
-[`abort(): void`](/hooks/use-abort-controller#hook)
-
-Aborts the associated operation.
-
-[`abortAfter(time: number): void`](/hooks/use-abort-controller#hook)
-
-Aborts the associated operation after a specified delay.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-| Parameter | Type    | Description                    |
-|-----------|---------|--------------------------------|
-| `time`    | number  | The delay time in milliseconds.|
-
-[`abortIf(fn: (arg?: unknown) => unknown): void`](/hooks/use-abort-controller#hook)
-
-Aborts the operation if the provided condition is met.
-
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter | Type                                    | Description                                           |
-|-----------|-----------------------------------------|-------------------------------------------------------|
-| `fn`      | `(arg?: unknown) => unknown`            | A function that returns a boolean indicating the condition to check. |
-
-
-[`abortIfAfter(fn: (arg?: unknown) => unknown, time: number): void`](/hooks/use-abort-controller#hook)
-
-Aborts the operation if the provided condition is met after a specified delay.
-
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter | Type      | Description                                      |
-|-----------|-----------|--------------------------------------------------|
-| `fn`      | `(arg?: unknown) => unknown` | A function that returns a boolean indicating the condition to check. |
-| `time`    | number    | The delay time in milliseconds.                  |
-
-[`isAborted: boolean`](/hooks/use-abort-controller#hook)
-
-A boolean state indicating whether the operation has been aborted.
 
 
 ## Contributors
