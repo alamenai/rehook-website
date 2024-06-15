@@ -10,60 +10,6 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
  
 Create a file `use-local-storage.ts` and copy & paste the code from [useLocalStorage](/hooks/use-local-storage#hook).
 
-### Usage
-
- ```jsx {3,6} copy
-
-import React, { useEffect } from 'react';
-import { useLocalStorage } from './hooks/use-local-storage';
-
-function App() {
-    const { storage, addItem, renameKey, getValue, deleteItem, deleteItemAfterDelay, clearLocalStorage } = useLocalStorage();
-
-    const handleNewItem = () => {
-        addItem('mode', 'dark');
-    };
-
-    const handleDeleteItem = () => {
-        deleteItem('mode');
-    };
-
-    const handleDeleteItemAfterDelay = () => {
-        deleteItemAfterDelay('color', 2000);
-    };
-
-    const handleRenameItem = () => {
-        renameKey('mode', 'color');
-    };
-
-    useEffect(() => {
-        clearLocalStorage();
-    }, []);
-
-    useEffect(() => {
-        console.log(storage);
-    }, [storage]);
-
-    useEffect(() => {
-        const retrievedValue = getValue('color');
-        console.log('Retrieved value:', retrievedValue);
-    }, [getValue]);
-
-    return (
-        <div>
-            <h1>Local Storage Demo</h1>
-            <button onClick={handleNewItem}>Add Item</button>
-            <button onClick={handleDeleteItem}>Delete Item</button>
-            <button onClick={handleRenameItem}>Rename Key</button>
-            <button onClick={handleDeleteItemAfterDelay}>Delete After 2s</button>
-        </div>
-    );
-}
-
-export default App;
-
- ```
-
 
 ### Hook
 
@@ -205,130 +151,78 @@ export const getLocalStorageItems = () => {
 ```
 
 
+### Usage
+
+ ```jsx {3,6} copy
+
+import React, { useEffect } from 'react';
+import { useLocalStorage } from './hooks/use-local-storage';
+
+function App() {
+    const { storage, addItem, renameKey, getValue, deleteItem, deleteItemAfterDelay, clearLocalStorage } = useLocalStorage();
+
+    const handleNewItem = () => {
+        addItem('mode', 'dark');
+    };
+
+    const handleDeleteItem = () => {
+        deleteItem('mode');
+    };
+
+    const handleDeleteItemAfterDelay = () => {
+        deleteItemAfterDelay('color', 2000);
+    };
+
+    const handleRenameItem = () => {
+        renameKey('mode', 'color');
+    };
+
+    useEffect(() => {
+        clearLocalStorage();
+    }, []);
+
+    useEffect(() => {
+        console.log(storage);
+    }, [storage]);
+
+    useEffect(() => {
+        const retrievedValue = getValue('color');
+        console.log('Retrieved value:', retrievedValue);
+    }, [getValue]);
+
+    return (
+        <div>
+            <h1>Local Storage Demo</h1>
+            <button onClick={handleNewItem}>Add Item</button>
+            <button onClick={handleDeleteItem}>Delete Item</button>
+            <button onClick={handleRenameItem}>Rename Key</button>
+            <button onClick={handleDeleteItemAfterDelay}>Delete After 2s</button>
+        </div>
+    );
+}
+
+export default App;
+
+ ```
+
+
 ## API
 
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
 
-[`storage`](/hooks/use-local-storage#hook)
+| Name                                                                                        | Description                                                         |
+|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `storage`                                                  | An array representing the current state of local storage items.     |
+| `getValue(itemKey: string): string \| null`                 | Retrieves the value of a specific item from local storage.          |
+| `renameKey(oldKey: string, newKey: string): void`         | Renames a key in the local storage.                                 |
+| `getMultipleValues(keys: string[]): string[]`              | Retrieves values for multiple items from local storage.             |
+| `addItem(key: string, value: string): void`            | Adds a new item to the local storage.                               |
+| `addMultipleItems(items: { key: string; value: string }[]): void`| Adds multiple items to the local storage.                           |
+| `deleteItem(key: string): void`                            | Deletes an item from the local storage.                             |
+| `deleteItemAfterDelay(key: string, time: number): void`  | Deletes an item from the local storage after a specified delay.     |
+| `deleteMultipleItems(keys: string[]): void`             | Deletes multiple items from the local storage.                      |
+| `clearLocalStorage(): void`                                 | Clears all items from the local storage.                            |
 
-An array representing the current state of local storage items..
-
-[`getValue(itemKey: string): string | null`](/hooks/use-local-storage#hook)
-
-Retrieves the value of a specific item from local storage.
-
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-| Parameter   | Type       | Description                                     |
-|-------------|------------|-------------------------------------------------|
-| `itemKey`   | `string`   | The key of the item to retrieve.                |
-
-
- <h1 className='text-xl font-medium mt-6'>Returns</h1>
-
-| Type             | Description                                     |
-|------------------|-------------------------------------------------|
-| `string` \| `null` | The value of the specified item if found; otherwise, null. |
-
-
- [`renameKey(oldKey: string, newKey: string): void`](/hooks/use-local-storage#hook)
-
-Renames a key in the local storage.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter   | Type       | Description                                     |
-|-------------|------------|-------------------------------------------------|
-| `oldKey`    | `string`   | The current key name.                          |
-| `newKey`    | `string`   | The new key name.                              |
-
-[`getMultipleValues(keys: string[]): string[]`](/hooks/use-local-storage#hook)
-
-Retrieves values for multiple items from local storage.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter   | Type       | Description                                     |
-|-------------|------------|-------------------------------------------------|
-| `keys (string[])`  | `string`   |  An array of keys to retrieve values for.               |
-
-
- <h1 className='text-xl font-medium mt-6'>Returns</h1>
-
-| Type       | Description                                      |
-|------------|--------------------------------------------------|
-| `string[]` | An array containing values of the specified keys.|
-
-
-[`addItem(key: string, value: string): void`](/hooks/use-local-storage#hook)
-
-
-Adds a new item to the local storage.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter | Type     | Description                             |
-|-----------|----------|-----------------------------------------|
-| `key`     | `string` | The key of the item to add.             |
-| `value`   | `string` | The value of the item to add.           |
-
-
-[`addMultipleItems(items: { key: string; value: string }[]): void`](/hooks/use-local-storage#hook)
-
-Adds multiple items to the local storage.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter | Type                                    | Description                                    |
-|-----------|-----------------------------------------|------------------------------------------------|
-| `items`   | `{ key: string; value: string }[]`     | An array of objects containing key-value pairs to add. |
-
-
-[`deleteItem(key: string): void`](/hooks/use-local-storage#hook)
-
-
-Deletes an item from the local storage.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter | Type     | Description                       |
-|-----------|----------|-----------------------------------|
-| `key`     | `string` | The key of the item to delete.   |
-
-]
-[`deleteItemAfterDelay(key: string, time: number): void`](/hooks/use-local-storage#hook)
-
-
-Deletes an item from the local storage after a specified delay.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-
-| Parameter | Type      | Description                                      |
-|-----------|-----------|--------------------------------------------------|
-| `key`     | `string`  | The key of the item to delete.                   |
-| `time`    | `number`  | The delay time in milliseconds.                  |
-
-
-[`deleteMultipleItems(keys: string[]): void`](/hooks/use-local-storage#hook)
-
-Deletes multiple items from the local storage.
-
- <h1 className='text-xl font-medium mt-6'>Parameters</h1>
-
-| Parameter | Type         | Description                                      |
-|-----------|--------------|--------------------------------------------------|
-| `keys`    | `string[]`   | An array of keys of the items to delete.        |
-
-[`clearLocalStorage(): void`](/hooks/use-local-storage#hook)
-
-
-Clears all items from the local storage.
 
 
 ## Contributors
