@@ -4,45 +4,10 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for fetching data from an API.</h3>
 
-## Add hook
+### Add hook
 
 Create a file `use-fetch.ts` and copy & paste the code from [useFetch](/hooks/use-fetch#hook).
 
-## Usage
-
-```tsx {3,11}
-
-import React, { useEffect, useState } from 'react';
-import { useFetch } from './useFetch';
-
-type Product = {
-    id: string
-    title: string
-}
-
-function App() {
-    const { data, isLoading, error, refetch } = useFetch<Product[]>('https://fakestoreapi.com/products');
-
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    return (
-        <div>
-            <h1>useFetch Example</h1>
-            <p>Data: {JSON.stringify(data)}</p>
-            <button onClick={refetch}>Refetch Data</button>
-        </div>
-    );
-}
-
-export default App;
-
-```
 
 ### Hook
 
@@ -164,11 +129,48 @@ export const useFetch: UseFetch = <T = unknown>(
 
 ```
 
+### Usage
+
+```tsx {3,11}
+
+import React, { useEffect, useState } from 'react';
+import { useFetch } from './useFetch';
+
+type Product = {
+    id: string
+    title: string
+}
+
+function App() {
+    const { data, isLoading, error, refetch } = useFetch<Product[]>('https://fakestoreapi.com/products');
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    return (
+        <div>
+            <h1>useFetch Example</h1>
+            <p>Data: {JSON.stringify(data)}</p>
+            <button onClick={refetch}>Refetch Data</button>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+
 ## API
 
  <h1 className='text-xl font-medium mt-6'>Parameters</h1>
 
-| Parameter | Type | Description |
+| Name | Type | Description |
 | ---- | ---- | ----------- |
 | `url` | `string` | The URL from which to fetch the data. |
 | `trigger` | `boolean` (optional) | If `true`, the fetch operation will be triggered immediately. Default is `true`. |
