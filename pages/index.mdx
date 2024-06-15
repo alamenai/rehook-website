@@ -1,7 +1,3 @@
----
-title: Welcome
----
-
 import {
   Accordion,
   AccordionContent,
@@ -9,17 +5,39 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
+
 # Rehook
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">
-A collection of custom and reusable hooks designed to streamline your development process by eliminating the need 
-to repeatedly implement the same hooks across different projects. 
+Eliminate the need to repeatedly implement the same hooks across different projects. 
 </h3>
 
-<h2 className="font-bold text-2xl mt-8">It's not a library or a package to install.</h2>
+## Philosophy
 
-<h3 className="mt-8 font-bold text-lg">What do you mean by not a library or a package?</h3>
+<h2 className="font-bold text-xl mt-8">The Headless Logic</h2>
 
+
+Since I started writing code with React in 2018, I've realized that about 25% of my time has been spent repeatedly writing the same patterns and logic for tasks like data fetching, animations, event handling, and storing data in the browser. 
+
+These tasks were just in different contexts but essentially the same.
+
+I believe that frontend developers should focus more on the **business logic** rather than wasting time on implementing custom hooks for their components.
+
+Some important questions I frequently ask myself when developing applications are:
+
+1. If we have headless UI to create our components, is it possible to have headless logic ( hooks ) to integrate it with them?
+
+2. Why do I rely on multiple third-party libraries or packages to integrate custom hooks?
+
+3. After creating a useful custom hook, how can I share it effectively with others?
+    
+
+**The last question was very important.**
+
+
+<h2 className="font-bold text-3xl mt-8">It's not a library or a package to install.</h2>
+
+<h2 className="font-bold text-xl mt-8">What do you mean by not a library or a package?</h2>
 
 <h5 className="mt-4">
 
@@ -32,6 +50,7 @@ From there, you have full control to customize it to suit your specific needs.
 This approach empowers you with ownership and flexibility, enabling you to modify, delete, or expand the code as necessary.
 
 </h5>
+
 ## FAQ
 
 <details>
