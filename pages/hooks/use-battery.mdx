@@ -4,42 +4,13 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for fetching battery status information.</h3>
 
-## Add hook
+### Add hook
 
 Create a file `use-battery.ts` and copy & paste the code from [useBattery](/hooks/use-battery#hook).
 
-## Usage
+### Hook
 
-```tsx {3,6}
-
-import React, { useEffect, useState } from 'react';
-import { useBattery } from './useBattery';
-
-function App() {
-    const batteryInfo = useBattery();
-
-    if (!batteryInfo) {
-        return <div>Battery status unavailable</div>;
-    }
-
-    return (
-        <div>
-            <h1>Battery Status</h1>
-            <p>Charging: {batteryInfo.charging ? 'Yes' : 'No'}</p>
-            <p>Charging Time: {batteryInfo.chargingTime}</p>
-            <p>Discharging Time: {batteryInfo.dischargingTime}</p>
-            <p>Level: {batteryInfo.level}</p>
-        </div>
-    );
-}
-
-export default App;
-
-```
-
-## Hook
-
-```ts
+```ts copy
 
 import { useEffect, useState } from 'react'
 
@@ -78,15 +49,39 @@ export const useBattery = (): BatteryManager | undefined => {
 }
 
 ```
+
+### Usage
+
+```tsx {3,6} copy
+
+import React, { useEffect, useState } from 'react';
+import { useBattery } from './useBattery';
+
+function App() {
+    const battery = useBattery();
+
+    if (!battery) {
+        return <div>Battery status unavailable</div>;
+    }
+
+    return (
+        <div>
+            <h1>Battery Status</h1>
+            <p>Charging: {battery.charging ? 'Yes' : 'No'}</p>
+            <p>Charging Time: {battery.chargingTime}</p>
+            <p>Discharging Time: {battery.dischargingTime}</p>
+            <p>Level: {battery.level}</p>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
 ## API
 
-[`useBattery(): BatteryManager | undefined`](/hooks/use-battery#hook)
-
-A custom hook for fetching battery status information in a React application.
-
  <h1 className='text-xl font-medium mt-6'>Returns</h1>
-
-An object containing the following properties:
 
 | Name             | Type      | Description                                                             |
 | ---------------- | --------- | ----------------------------------------------------------------------- |
