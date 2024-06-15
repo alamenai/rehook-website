@@ -1,49 +1,62 @@
+import { ChevronRight } from "lucide-react";
 import { Badge } from "./components/ui/badge";
+import { ThemeSwitch, LocaleSwitch } from "nextra-theme-docs";
 
 const config = {
+  head: (
+    <>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="og:title" content="Rehook" />
+      <meta
+        property="og:description"
+        content="Eliminate the need to repeatedly implement the same hooks across different projects."
+      />
+    </>
+  ),
+
+  navbar: {
+    extraContent: (
+      <>
+        <LocaleSwitch />
+        <ThemeSwitch />
+      </>
+    ),
+  },
+
   logo: () => {
     return (
       <div className="flex items-center">
         <div className="flex items-center">
           <svg
-            width="48"
-            height="48"
-            viewBox="0 0 192 108"
-            fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="rgb(244 63 94)"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-fish"
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M143.629 6.09454e-07C140.676 23.6779 120.478 42 96 42C71.5223 42 51.324 23.6779 48.3714 0C48.1263 1.96557 48 3.96804 48 6C48 32.5097 69.4903 54 96 54C122.51 54 144 32.5097 144 6C144 3.96804 143.874 1.96557 143.629 6.09454e-07Z"
-              fill="#FF00F5"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M95.6286 54C92.676 77.6779 72.4777 96 48 96C23.5223 96 3.32395 77.6779 0.371363 54C0.12626 55.9656 0 57.968 0 60C0 86.5097 21.4903 108 48 108C74.5097 108 96 86.5097 96 60C96 57.968 95.8737 55.9656 95.6286 54Z"
-              fill="#FF00F5"
-              fillOpacity="0.941176"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M191.629 54C188.676 77.6779 168.478 96 144 96C119.522 96 99.324 77.6779 96.3714 54C96.1263 55.9656 96 57.968 96 60C96 86.5097 117.49 108 144 108C170.51 108 192 86.5097 192 60C192 57.968 191.874 55.9656 191.629 54Z"
-              fill="#FF00F5"
-            />
+            <path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z" />
+            <path d="M18 12v.5" />
+            <path d="M16 17.93a9.77 9.77 0 0 1 0-11.86" />
+            <path d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33" />
+            <path d="M10.46 7.26C10.2 5.88 9.17 4.24 8 3h5.8a2 2 0 0 1 1.98 1.67l.23 1.4" />
+            <path d="m16.01 17.93-.23 1.4A2 2 0 0 1 13.8 21H9.5a5.96 5.96 0 0 0 1.49-3.98" />
           </svg>
           <span
             style={{
               fontWeight: 800,
-              color: "#FF00F5",
             }}
-            className="flex items-center text-2xl ml-4"
+            className="flex items-center text-2xl ml-4 text-rose-500"
           >
             <p className="mr-6">Rehook</p>
-            <Badge className="bg-orange-600 text-orange-50">Alpha</Badge>
+            <Badge className="bg-rose-100 border-rose-500 text-rose-600 px-[0.5em] hover:bg-transparent">
+              BETA
+            </Badge>
           </span>
-          <pre></pre>
-          <p className="text-center absolute right-64">🇵🇸</p>
         </div>
       </div>
     );
@@ -79,12 +92,12 @@ const config = {
             title === "useCookie" ||
             title === "useSession" ||
             title === "useMediaQuery") && (
-            <Badge className=" absolute -right-[0.5em] bg-transparent border-lime-400 text-lime-500 px-[0.5em] hover:bg-transparent">
+            <Badge className=" absolute -right-[0.5em] bg-transparent border-rose-500 text-rose-500 px-[0.5em] hover:bg-transparent">
               New
             </Badge>
           )}
           {title === "useFetch" && (
-            <Badge className=" absolute -right-[0.5em] bg-transparent border-pink-500 text-pink-500 px-[0.5em] hover:bg-transparent">
+            <Badge className=" absolute -right-[0.5em] bg-transparent border-blue-500 text-blue-500 px-[0.5em] hover:bg-transparent">
               Updated
             </Badge>
           )}
@@ -92,31 +105,46 @@ const config = {
       );
     },
   },
+
   footer: {
     text: (
       <span>
-        MIT {new Date().getFullYear()} ©{" "}
+        Built by{" "}
+        <a href="https://github.com/alamenai" target="_blank">
+          <b>
+            <u>Ala Menai.</u>
+          </b>
+        </a>{" "}
+        The source code is availabe on{" "}
         <a href="https://github.com/alamenai/rehook" target="_blank">
-          Rehook
+          <b>
+            <u>GitHub.</u>
+          </b>
         </a>
-        .
       </span>
     ),
   },
+
   banner: {
     key: "2.0-release",
+    dismissible: false,
     text: (
-      <a href="https://github.com/alamenai/rehook" target="_blank">
-        🔨 Rehook is still under development and it may have frequent break
-        changes 🔨
-      </a>
+      <div className="bg-rose-600 absolute right-0 left-0 top-0 bottom-0 flex justify-center items-center">
+        <a href="https://github.com/alamenai/rehook" target="_blank">
+          <span className="mr-4">🎉</span> Rehook 1.0.0 beta is out with 16
+          custom hooks.
+          <span className="ml-4">🎉</span>
+        </a>
+      </div>
     ),
   },
+
   feedback: {
     useLink: () => {
       return "https://github.com/alamenai/rehook/issues/new";
     },
   },
+
   editLink: {
     component: (url) => {
       console.log(url);
@@ -129,6 +157,7 @@ const config = {
       );
     },
   },
+
   useNextSeoProps() {
     return {
       titleTemplate: "%s | Rehook",
