@@ -4,34 +4,11 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for tracking mouse position and handling mouse events.</h3>
 
-## Add hook
+### Add hook
 
 Create a file `use-mouse.ts` and copy & paste the code from [useMouse](/hooks/use-mouse#hook).
 
-## Usage
-
-```tsx {3,6} copy
-
-import React from 'react';
-import { useMouse } from './useMouse';
-
-function App() {
-    const mousePosition = useMouse('mousemove');
-
-    return (
-        <div>
-            <h1>Mouse Position</h1>
-            <p>X: {mousePosition?.x}</p>
-            <p>Y: {mousePosition?.y}</p>
-        </div>
-    );
-}
-
-export default App;
-
-```
-
-## Hook
+### Hook
 
 ```ts copy
 
@@ -68,6 +45,29 @@ export const useMouse = (eventType: 'mousemove' | 'mouseenter' | 'click', callba
 
 ```
 
+### Usage
+
+```tsx {3,6} copy
+
+import React from 'react';
+import { useMouse } from './useMouse';
+
+function App() {
+    const mousePosition = useMouse('mousemove');
+
+    return (
+        <div>
+            <h1>Mouse Position</h1>
+            <p>X: {mousePosition?.x}</p>
+            <p>Y: {mousePosition?.y}</p>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
 ## API
 
 <h1 className='text-xl font-medium mt-6'>Parameters</h1>
@@ -78,8 +78,6 @@ export const useMouse = (eventType: 'mousemove' | 'mouseenter' | 'click', callba
 | `callback` | `() => void`                                  | (Optional) A function to call when the specified mouse event is triggered.  |
 
 <h1 className='text-xl font-medium mt-6'>Returns</h1>
-
-An object containing the following properties:
 
 | Name | Type                | Description                                      |
 | ---- | ------------------- | ------------------------------------------------ |
