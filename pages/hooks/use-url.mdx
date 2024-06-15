@@ -4,36 +4,11 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for accessing URL information.</h3>
 
-## Add hook
+### Add hook
 
 Create a file `use-url.ts` and copy & paste the code from [useUrl](/hooks/use-url#hook).
 
-## Usage
-
-```tsx {3,6}
-
-import React, { useEffect, useState } from 'react';
-import { useUrl } from './useUrl';
-
-function App() {
-    const { url, getRootPath, getQueryParams, getPort } = useUrl();
-
-    return (
-        <div>
-            <h1>URL Information</h1>
-            <p>Current URL: {url}</p>
-            <p>Root Path: {getRootPath()}</p>
-            <p>Query Parameters: {JSON.stringify(getQueryParams())}</p>
-            <p>Port: {getPort()}</p>
-        </div>
-    );
-}
-
-export default App;
-
-```
-
-## Hook
+### Hook
 
 ```ts
 
@@ -80,15 +55,36 @@ export const useUrl = (fn?: () => void) => {
 
 ```
 
+### Usage
+
+```tsx {3,6}
+
+import React, { useEffect, useState } from 'react';
+import { useUrl } from './useUrl';
+
+function App() {
+    const { url, getRootPath, getQueryParams, getPort } = useUrl();
+
+    return (
+        <div>
+            <h1>URL Information</h1>
+            <p>Current URL: {url}</p>
+            <p>Root Path: {getRootPath()}</p>
+            <p>Query Parameters: {JSON.stringify(getQueryParams())}</p>
+            <p>Port: {getPort()}</p>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
+
+
 ## API
 
-[`useUrl(fn?: () => void): { url: string, getRootPath: () => string, getQueryParams: () => { [key: string]: string }, getPort: () => string }`](/hooks/use-url#hook)
-
-A custom hook for accessing URL information.
-
-### Returns
-
-An object containing the following properties and methods:
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
 
 | Name             | Type             | Description                                                          |
 | ---------------- | ---------------- | -------------------------------------------------------------------- |
