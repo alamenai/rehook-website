@@ -55,7 +55,7 @@ export const useBattery = (): BatteryManager | undefined => {
 ```tsx {3,6} copy
 
 import React, { useEffect, useState } from 'react';
-import { useBattery } from './useBattery';
+import { useBattery } from './hooks/use-battery';
 
 function App() {
     const battery = useBattery();

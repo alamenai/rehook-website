@@ -87,7 +87,7 @@ export const getCookie = (name: string, initialValue = '') => {
 ```tsx {3,6} copy
 
 import React from 'react';
-import { useCookie } from './use-cookie';
+import { useCookie } from './hooks/use-cookie';
 
 function App() {
     const [userToken, setUserToken] = useCookie('token', '');
