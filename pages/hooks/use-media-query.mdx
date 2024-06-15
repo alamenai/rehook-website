@@ -4,34 +4,15 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 <h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook for managing responsive media queries.</h3>
 
-## Usage
+### Add hook
 
-```tsx {3,7,8,9,10,11,12,13,14,15,16,17} copy
-
-import React from 'react';
-import { useMediaQuery } from './useMediaQuery';
-
-function App() {
-    const { mediaWidth, resize } = useMediaQuery('md');
-
-    return (
-        <div>
-            <h1>useMediaQuery Example</h1>
-            <p>Current Media Width: {mediaWidth}px</p>
-            <button onClick={() => resize('sm')}>Resize to Small</button>
-            <button onClick={() => resize('lg')}>Resize to Large</button>
-        </div>
-    );
-}
-
-export default App;
-
-```
+Create a file `use-media-query.ts` and copy & paste the code from [useMediaQuery](/hooks/use-media-query#hook).
 
 
-## Hook
 
-```ts
+### Hook
+
+```ts copy
 
 import { useEffect, useState } from 'react'
 
@@ -110,11 +91,35 @@ export const useMediaQuery = (type: MediaQuery) => {
 
 ```
 
+### Usage
+
+```tsx {6} copy
+
+import React from 'react';
+import { useMediaQuery } from './useMediaQuery';
+
+function App() {
+    const { mediaWidth, resize } = useMediaQuery('md');
+
+    return (
+        <div>
+            <h1>useMediaQuery Example</h1>
+            <p>Current Media Width: {mediaWidth}px</p>
+            <button onClick={() => resize('sm')}>Resize to Small</button>
+            <button onClick={() => resize('lg')}>Resize to Large</button>
+        </div>
+    );
+}
+
+export default App;
+
+```
+
 ## API
 
 <h1 className='text-xl font-medium mt-6'>Parameters</h1>
 
-| Parameter | Type        | Description                                      |
+| Name | Type        | Description                                      |
 | --------- | ----------- | ------------------------------------------------ |
 | `type`    | `MediaQuery`| The type of media query to initialize with.      |
 
