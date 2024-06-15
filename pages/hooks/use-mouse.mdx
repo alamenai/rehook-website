@@ -50,7 +50,7 @@ export const useMouse = (eventType: 'mousemove' | 'mouseenter' | 'click', callba
 ```tsx {3,6} copy
 
 import React from 'react';
-import { useMouse } from './useMouse';
+import { useMouse } from './hooks/use-mouse';
 
 function App() {
     const mousePosition = useMouse('mousemove');
