@@ -9,9 +9,35 @@ import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
 
 Create a file `use-timeout.ts` and copy & paste the code from [useTimeout](/hooks/use-timeout#hook)
 
-## Usage
+### Hook
 
-```tsx
+```ts copy
+
+import { useEffect, useRef } from 'react'
+
+export const useTimeout = (t: number, fn?: () => void) => {
+    const timeout = useRef<NodeJS.Timeout>()
+
+    const refresh = () => timeout.current?.refresh()
+
+    const cancel = () => clearTimeout(timeout.current)
+
+    useEffect(() => {
+        if (fn) {
+            timeout.current = setTimeout(() => fn(), t)
+        }
+    }, [fn, t])
+
+    return { timeout, refresh, cancel }
+}
+
+
+```
+
+### Usage
+
+```tsx {13} copy
+
 import React, { useState } from 'react';
 import { useTimeout } from './useTimeout';
 
@@ -52,36 +78,7 @@ export default App;
 
 ```
 
-### Hook
-
-```ts copy
-
-import { useEffect, useRef } from 'react'
-
-export const useTimeout = (t: number, fn?: () => void) => {
-    const timeout = useRef<NodeJS.Timeout>()
-
-    const refresh = () => timeout.current?.refresh()
-
-    const cancel = () => clearTimeout(timeout.current)
-
-    useEffect(() => {
-        if (fn) {
-            timeout.current = setTimeout(() => fn(), t)
-        }
-    }, [fn, t])
-
-    return { timeout, refresh, cancel }
-}
-
-
-```
-
 ## API
-
-[`useTimeout(t: number, fn?: () => void): { timeout: React.MutableRefObject<NodeJS.Timeout | undefined>, refresh: () => void, cancel: () => void }`](/hooks/use-timeout#hook)
-
-Creates a timeout that will invoke a callback function after a specified time period.
 
  <h1 className='text-xl font-medium mt-6'>Parameters</h1>
 
@@ -92,8 +89,6 @@ Creates a timeout that will invoke a callback function after a specified time pe
 
 
  <h1 className='text-xl font-medium mt-6'>Returns</h1>
-
-An object containing the following properties:
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
