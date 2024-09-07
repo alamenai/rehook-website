@@ -83,22 +83,9 @@ const config = {
       return (
         <div className="flex items-center justify-between relative w-full">
           <div>{title}</div>
-          {(title === "useLoading" ||
-            title === "useBattery" ||
-            title === "useUrl" ||
-            title === "useEnv" ||
-            title === "useMouse" ||
-            title === "useUnsavedFormChanges" ||
-            title === "useCookie" ||
-            title === "useSession" ||
-            title === "useMediaQuery") && (
+          {title === "useGeolocation" && (
             <Badge className=" absolute -right-[0.5em] bg-transparent border-rose-500 text-rose-500 px-[0.5em] hover:bg-transparent">
               New
-            </Badge>
-          )}
-          {title === "useFetch" && (
-            <Badge className=" absolute -right-[0.5em] bg-transparent border-blue-500 text-blue-500 px-[0.5em] hover:bg-transparent">
-              Updated
             </Badge>
           )}
         </div>

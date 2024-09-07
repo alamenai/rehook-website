@@ -1,0 +1,116 @@
+import { Steps } from 'nextra/components'
+import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
+
+# useGeolocation
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook that provides functionalities for accessing and managing geolocation data.</h3>
+
+### Add hook
+
+Create a file `use-geolocation.ts` and copy & paste the code from [useGeolocation](/hooks/use-geolocation#hook).
+
+### Hook
+
+```ts copy
+import { useState, useEffect, useCallback } from 'react'
+
+type Coordinates = {
+    latitude: number | null
+    longitude: number | null
+}
+
+type GeolocationError = {
+    code: number
+    message: string
+} | null
+
+type GeolocationOptions = {
+    enableHighAccuracy?: boolean
+    timeout?: number
+    maximumAge?: number
+}
+
+export const useGeolocation = (options?: GeolocationOptions) => {
+    const [coordinates, setCoordinates] = useState<Coordinates>({
+        latitude: null,
+        longitude: null,
+    })
+
+    const [error, setError] = useState<GeolocationError>(null)
+
+    const handleSuccess = (position: GeolocationPosition) => {
+        const { latitude, longitude } = position.coords
+        setCoordinates({ latitude, longitude })
+        setError(null)
+    }
+
+    const handleError = (error: GeolocationPositionError) => {
+        setError({
+            code: error.code,
+            message: error.message,
+        })
+    }
+
+    const getCurrentPosition = useCallback(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(handleSuccess, handleError, options)
+        } else {
+            setError({
+                code: 0,
+                message: 'Geolocation is not supported by your browser.',
+            })
+        }
+    }, [options])
+
+    useEffect(() => {
+        getCurrentPosition()
+    }, [getCurrentPosition])
+
+    return { coordinates, error, refresh: getCurrentPosition }
+}
+```
+
+### Usage
+
+```jsx copy
+import React from 'react';
+import { useGeolocation } from './hooks/use-geolocation';
+
+function GeolocationComponent() {
+    const { coordinates, error, refresh } = useGeolocation();
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    return (
+        <div>
+            <h1>Geolocation Demo</h1>
+            {coordinates.latitude && coordinates.longitude ? (
+                <p>
+                    Latitude: {coordinates.latitude}, Longitude: {coordinates.longitude}
+                </p>
+            ) : (
+                <p>Loading location...</p>
+            )}
+            <button onClick={refresh}>Refresh Location</button>
+        </div>
+    );
+}
+
+export default GeolocationComponent;
+```
+
+## API
+
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Name | Description |
+|------|-------------|
+| `coordinates` | An object containing the current latitude and longitude. |
+| `error` | An object containing error information if geolocation fails. |
+| `refresh` | A function to manually refresh the geolocation. |
+
+## Contributors
+
+<AvatarCircles numPeople={1} avatarUrls={["https://avatars.githubusercontent.com/u/20143684?v=4"]} className="mt-6"/>
