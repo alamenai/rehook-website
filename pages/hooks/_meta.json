@@ -4,6 +4,7 @@
   "use-cookie": "useCookie",
   "use-env": "useEnv",
   "use-fetch": "useFetch",
+  "use-geolocation": "useGeolocation",
   "use-history": "useHistory",
   "use-loading": "useLoading",
   "use-media-query": "useMediaQuery",
