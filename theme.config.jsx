@@ -83,7 +83,7 @@ const config = {
       return (
         <div className="flex items-center justify-between relative w-full">
           <div>{title}</div>
-          {title === "useGeolocation" && (
+          {(title === "useGeolocation" || title === "useInterval") && (
             <Badge className=" absolute -right-[0.5em] bg-transparent border-rose-500 text-rose-500 px-[0.5em] hover:bg-transparent">
               New
             </Badge>

@@ -1,0 +1,112 @@
+import AvatarCircles from "@/components/magic-ui/avatar.circles.tsx";
+
+# useInterval
+
+<h3 className="mt-4 text-xl font-normal text-gray-400">A custom hook that provides functionalities for managing and controlling interval-based operations.</h3>
+
+### Add hook
+
+Create a file `use-interval.ts` and copy & paste from [useInterval](/hooks/use-interval#hook).
+
+```ts copy
+import { useEffect, useRef, useState, useCallback } from 'react';
+
+type IntervalFunction = () => void;
+
+interface IntervalHookResult {
+  isRunning: boolean;
+  delay: number;
+  startInterval: () => void;
+  stopInterval: () => void;
+  updateDelay: (newDelay: number) => void;
+}
+
+export const useInterval = (initialCallback: IntervalFunction, initialDelay: number): IntervalHookResult => {
+  const [isRunning, setIsRunning] = useState<boolean>(true);
+  const [delay, setDelay] = useState<number>(initialDelay);
+  const savedCallback = useRef<IntervalFunction>(initialCallback);
+
+  useEffect(() => {
+    savedCallback.current = initialCallback;
+  }, [initialCallback]);
+
+  useEffect(() => {
+    if (!isRunning) return undefined;
+
+    const id = setInterval(() => savedCallback.current(), delay);
+
+    return () => clearInterval(id);
+  }, [delay, isRunning]);
+
+  const startInterval = useCallback((): void => {
+    setIsRunning(true);
+  }, []);
+
+  const stopInterval = useCallback((): void => {
+    setIsRunning(false);
+  }, []);
+
+  const updateDelay = useCallback((newDelay: number): void => {
+    setDelay(newDelay);
+  }, []);
+
+  return {
+    isRunning,
+    delay,
+    startInterval,
+    stopInterval,
+    updateDelay,
+  };
+};
+```
+
+### Usage
+
+```jsx {2,6} copy
+import React from 'react';
+import { useInterval } from './hooks/use-interval';
+
+function IntervalComponent() {
+  const [count, setCount] = React.useState(0);
+  const { isRunning, delay, startInterval, stopInterval, updateDelay } = useInterval(() => {
+    setCount((prevCount) => prevCount + 1);
+  }, 1000);
+
+  return (
+    <div>
+      <h1>Interval Counter: {count}</h1>
+      <p>Interval status: {isRunning ? 'Running' : 'Stopped'}</p>
+      <p>Current delay: {delay}ms</p>
+      <button onClick={startInterval}>Start Interval</button>
+      <button onClick={stopInterval}>Stop Interval</button>
+      <button onClick={() => updateDelay(2000)}>Update Delay to 2s</button>
+    </div>
+  );
+}
+
+export default IntervalComponent;
+```
+
+## API
+
+<h1 className='text-xl font-medium mt-6'>Parameters</h1>
+
+| Name | Type | Description |
+|------|------|-------------|
+| `initialCallback` | `() => void` | The function to be called at each interval. |
+| `initialDelay` | `number` | The initial delay in milliseconds between each interval call. |
+
+<h1 className='text-xl font-medium mt-6'>Returns</h1>
+
+| Name | Type | Description |
+|------|------|-------------|
+| `isRunning` | `boolean` | Indicates whether the interval is currently running. |
+| `delay` | `number` | The current delay between interval calls in milliseconds. |
+| `startInterval` | `() => void` | Function to start the interval. |
+| `stopInterval` | `() => void` | Function to stop the interval. |
+| `updateDelay` | `(newDelay: number) => void` | Function to update the interval delay. |
+
+
+## Contributors
+
+<AvatarCircles numPeople={1} avatarUrls={["https://avatars.githubusercontent.com/u/53620963?v=4"]} className="mt-6"/>

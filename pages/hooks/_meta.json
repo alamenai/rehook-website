@@ -6,6 +6,7 @@
   "use-fetch": "useFetch",
   "use-geolocation": "useGeolocation",
   "use-history": "useHistory",
+  "use-interval": "useInterval",
   "use-loading": "useLoading",
   "use-media-query": "useMediaQuery",
   "use-mouse": "useMouse",
